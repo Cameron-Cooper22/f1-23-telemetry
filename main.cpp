@@ -9,12 +9,19 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+//TODO remake this line into <json/json.h> if I can figure out how
+#include "/Users/558632/homebrew/Cellar/jsoncpp/1.9.5/include/json/json.h"
+
 #include "PacketDefs.h"
 
 #define PORT 20777
 #define SERVER_ADDRESS = ""
 
 using namespace std;
+
+void read() {
+  ifstream ifs()
+}
 
 inline string getCurrentDateTime(string s) {
   time_t now = time(0);
@@ -66,6 +73,8 @@ public:
 
   void refresh() {}
 };
+
+
 
 
 int main() {
