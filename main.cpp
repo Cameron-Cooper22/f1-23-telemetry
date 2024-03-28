@@ -1,27 +1,20 @@
 #include <fstream>
 #include <iostream>
 #include <ncurses.h>
-#include <string>
+#include <cstring>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <netinet/tcp.h>
 #include <arpa/inet.h>
-#include <unistd.h>
 
 //TODO remake this line into <json/json.h> if I can figure out how
-#include "/Users/558632/homebrew/Cellar/jsoncpp/1.9.5/include/json/json.h"
-
 #include "PacketDefs.h"
+#include "Constants.h"
 
 #define PORT 20777
-#define SERVER_ADDRESS = ""
 
 using namespace std;
 
-void read() {
-  ifstream ifs()
-}
 
 inline string getCurrentDateTime(string s) {
   time_t now = time(0);
@@ -37,7 +30,7 @@ inline string getCurrentDateTime(string s) {
 
 inline void Logger(string logMsg) {
 
-  string filepath = "/Users/558632/logging/log_" + getCurrentDateTime("date") + ".txt";
+  string filepath = "/home/kinveth/logging/log_" + getCurrentDateTime("date") + ".txt";
   string now = getCurrentDateTime("now");
 
   ofstream ofs(filepath.c_str(), ios_base::out | ios_base::app);
@@ -49,14 +42,6 @@ enum Bartypes {
   BrakePressure,
   AcceleratorPressure,
   Gforce
-};
-
-class TelemetryClient {
-  public:
-
-    TelemetryClient(int port){
-      Logger("TelemetryClient Created");
-    }
 };
 
 class Bar {
@@ -78,5 +63,40 @@ public:
 
 
 int main() {
+  char *ip{(char *)"127.0.0.1"};
+  
+  struct sockaddr_in server_addr, client_addr;
+  unsigned char buffer[1460];
+  socklen_t addr_size;
+  int n;
+  
+  int sockfd{socket(AF_INET, SOCK_DGRAM, 0)};
+  if (sockfd < 0){
+    perror("[-]socket error");
+    Logger("Socket failed");
+    exit(1);
+  }
+
+  memset(&server_addr, '\0', sizeof(server_addr));
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = htons(PORT);
+  server_addr.sin_addr.s_addr = inet_addr(ip);
+  
+  n = bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+  if (n < 0){
+    perror("[-]bind error");
+    Logger("Socket Bind failed");
+    exit(1);
+  }
+  while (true){
+    // Zeroes out the buffer
+    bzero(buffer, 1460);
+    addr_size = sizeof(client_addr);
+
+    // Modifies buffer to be what is sent to server
+    recvfrom(sockfd, &buffer, 1024, 0, (struct sockaddr*)&client_addr, &addr_size);
+    cout << buffer << endl;
+  }
+
   return 0;
 }

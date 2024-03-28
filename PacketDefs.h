@@ -56,7 +56,6 @@
  * |____________________|_______|_______________________________________________________________________|
  * */
 
-
 /* MOTION PACKET */
 // Frequency is specified in menus
 // 1349 bytes
@@ -166,9 +165,6 @@ struct WeatherForecastSample
   uint8_t  m_rainPercentage;
 };
 
-enum TrackId{
-
-};
 
 enum Formula{
   F1Modern,

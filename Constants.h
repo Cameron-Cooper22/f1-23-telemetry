@@ -5,14 +5,6 @@
 #include <iostream>
 #include <string>
 
-#if defined(_WIN64) || defined(_WIN32)
-    std::string OUTPUT_PATH = "Outputs\\tmp\\";
-#endif
-#if defined(__unix__) || defined(__APPLE__)
-    std::string OUTPUT_PATH = "Outputs/tmp/";
-#endif
-
-
 /* DRIVER IDS */
 enum DriverIds {
   CARLOS_SAINZ = 0,
@@ -506,8 +498,21 @@ enum InfringementTypes {
   ATTRIBUTE_ASSIGNED
 };
 
-void writeJsonDataToFile(std::string filename, ){
-
-}
+enum PacketIDS {
+  MOTION,
+  SESSION,
+  LAP_DATA,
+  EVENT,
+  PARTICIPANTS,
+  CAR_SETUPS,
+  CAR_TELEMETRY,
+  CAR_STATUS,
+  FINAL_CLASSIFICATION,
+  LOBBY_INFO,
+  CAR_DAMAGE,
+  SESSION_HISTORY,
+  TYRE_SETS,
+  MOTION_EX
+};
 
 #endif
