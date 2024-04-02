@@ -88,7 +88,6 @@ int main() {
     Logger("Socket Bind failed");
     exit(1);
   }
-  while (true){
     // Zeroes out the buffer
     bzero(buffer, 1460);
     addr_size = sizeof(client_addr);
@@ -96,7 +95,6 @@ int main() {
     // Modifies buffer to be what is sent to server
     recvfrom(sockfd, &buffer, 1024, 0, (struct sockaddr*)&client_addr, &addr_size);
     cout << buffer << endl;
-  }
 
   return 0;
 }
