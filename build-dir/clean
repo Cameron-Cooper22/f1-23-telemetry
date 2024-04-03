@@ -1,0 +1,4 @@
+#/bin/zsh
+
+rm CMakeCache.txt Makefile cmake_install.cmake connect
+rm -rf CMakeFiles

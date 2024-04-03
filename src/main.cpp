@@ -13,10 +13,9 @@
 
 #define PORT 20777
 
-using namespace std;
 
 
-inline string getCurrentDateTime(string s) {
+inline std::string getCurrentDateTime(std::string s) {
   time_t now = time(0);
   struct tm tstruct;
   char buf[80];
@@ -25,15 +24,15 @@ inline string getCurrentDateTime(string s) {
     strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
   else if (s == "date")
     strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
-  return string(buf);
+  return std::string(buf);
 };
 
-inline void Logger(string logMsg) {
+inline void Logger(std::string logMsg) {
 
-  string filepath = "/home/kinveth/logging/log_" + getCurrentDateTime("date") + ".txt";
-  string now = getCurrentDateTime("now");
+  std::string filepath = "/home/kinveth/logging/log_" + getCurrentDateTime("date") + ".txt";
+  std::string now = getCurrentDateTime("now");
 
-  ofstream ofs(filepath.c_str(), ios_base::out | ios_base::app);
+  std::ofstream ofs(filepath.c_str(), std::ios_base::out | std::ios_base::app);
   ofs << now << '\t' << logMsg << '\n';
   ofs.close();
 };
@@ -53,7 +52,7 @@ public:
     val = y;
     id = x;
 
-    Logger("Bar Created - ID: " + to_string(x) + " Type: " + to_string(y));
+    Logger("Bar Created - ID: " + std::to_string(x) + " Type: " + std::to_string(y));
   }
 
   void refresh() {}
@@ -62,7 +61,7 @@ public:
 
 
 
-int main() {
+int main(int argc, char** argv) {
   char *ip{(char *)"127.0.0.1"};
   
   struct sockaddr_in server_addr, client_addr;
@@ -88,13 +87,26 @@ int main() {
     Logger("Socket Bind failed");
     exit(1);
   }
+  if (strcmp(argv[1], "--get-packet")){
     // Zeroes out the buffer
     bzero(buffer, 1460);
     addr_size = sizeof(client_addr);
 
     // Modifies buffer to be what is sent to server
-    recvfrom(sockfd, &buffer, 1024, 0, (struct sockaddr*)&client_addr, &addr_size);
-    cout << buffer << endl;
+    recvfrom(sockfd, &buffer, 1460, 0, (struct sockaddr*)&client_addr, &addr_size);
+    std::cout << buffer << std::endl;
+  } else if (argv[1] == NULL) {
+    while (true){
+      // Zeroes out the buffer
+      bzero(buffer, 1460);
+      addr_size = sizeof(client_addr);
 
+      // Modifies buffer to be what is sent to server
+      recvfrom(sockfd, &buffer, 1460, 0, (struct sockaddr*)&client_addr, &addr_size);
+      std::cout << buffer << std::endl;
+    }
+  } else {
+    std::cout << "[-]Invalid Input" << std::endl;
+  }
   return 0;
 }

@@ -7,7 +7,7 @@
 #define PORT 20777
 
 int main(){
-  char *ip{(char *)"127.0.0.1"};
+  char *ip = (char *)"127.0.0.1";
 
   int sockfd;
   struct sockaddr_in addr;

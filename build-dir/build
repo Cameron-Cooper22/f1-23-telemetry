@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+g++ -o connect ../src/connect.cpp
+cmake ..
+make
+
