@@ -3,10 +3,7 @@
 
 #include <cstdint>
 
-
-
-
-/* PACKET INFORMATION 
+/* PACKET INFORMATION
  *
  * uint8_t
  * int8

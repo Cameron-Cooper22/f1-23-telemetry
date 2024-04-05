@@ -1,0 +1,3 @@
+C:/Users/camer/CLionProjects/f1-23-telemetry/cmake-build-debug/CMakeFiles/Telemetry.dir
+C:/Users/camer/CLionProjects/f1-23-telemetry/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/camer/CLionProjects/f1-23-telemetry/cmake-build-debug/CMakeFiles/rebuild_cache.dir
